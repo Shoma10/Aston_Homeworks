@@ -55,14 +55,25 @@ class ArrayProcessor {
         int sum = 0;
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
-                try {
-                    sum += Integer.parseInt(array[i][j]);
-                } catch (NumberFormatException e) {
+                if (!isNumeric(array[i][j])) {
                     throw new MyArrayDataException("Неверные данные в ячейке [" + i + "][" + j + "]");
                 }
+                sum += Integer.parseInt(array[i][j]);
             }
         }
 
         System.out.println("Сумма элементов массива: " + sum);
+    }
+
+    private static boolean isNumeric(String str) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
